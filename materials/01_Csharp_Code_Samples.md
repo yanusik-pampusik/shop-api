@@ -1,5 +1,5 @@
 #### **RBAC**
-Рассмотрим пример на C#, как может выглядеть доступ к методам на основе ролей.
+Let's look at an example in C# of what access to methods based on roles might look like.
 
 ```csharp
 [Authorize(Roles="Cashier")]
@@ -17,7 +17,7 @@ public ActionResult AddItemToShoppingCart(...)
 
 #### **CBAC**
 
-Посмотрим пример на C#:
+Let's look at an example in C#:
 
 ```csharp
 [ClaimsAuthorize(Claims="Adult-older-than-18, Trust-worthy-client")]
@@ -33,10 +33,10 @@ public ActionResult AddParent(...)
 }
 ```
 
-### Dependency Injection, IoC-контейнеры
-Рассмотрим пример, как работает внедрение зависимостей на языке C#.
+### Dependency Injection, IoC-containers
+Let's look at an example of how dependency implementation works in C#.
 
-Для начала создаем интерфейс некоторого класса и его реализацию.
+First, we create an interface of some class and its implementation.
 
 ```csharp
 public interface ISomeClass
@@ -61,7 +61,7 @@ public class SomeClass: ISomeClass
 }
 ```
 
-Теперь зарегистрируем зависимость в файле Program.cs (.net6 +).
+Now let's register the dependency in the Program.cs (.net6+) file.
 
 ```csharp
 ...
@@ -69,7 +69,7 @@ builder.Services.AddTransient<ISomeClass, SomeClass>();
 ...
 ```
 
-Наконец, можно прокинуть зависимость в желаемый класс.
+Finally, you can inject a dependency into the desired class.
 
 ```csharp
 public class IndexModel : PageModel
@@ -88,4 +88,4 @@ public class IndexModel : PageModel
 }
 ```
 
-Ура! Мы научились добавлять зависимости без явного вызова конструктора объектов.
+Yay! We learned how to add dependencies without explicitly calling the object constructor.

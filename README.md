@@ -1,4 +1,6 @@
-# Авторизация и DI
+# Authorization and DI
+
+💡 [Tap here](https://new.oprosso.net/p/4cb31ec3f47a4596bc758ea1861fb624) **to leave your feedback on the project**. It's anonymous and will help our team make your educational experience better. We recommend completing the survey immediately after the project.
 
 ## Contents
 
@@ -8,33 +10,30 @@
 
 ### Introduction
 
-В этом блоке ты узнаешь, что такое сервис-ориентированная архитектура, микросервисная архитектура, авторизация и аутентификация, RBAC и CBAC, JWT, gRPC и DI.
+In this block you will learn what a service-oriented architecture, Microservice Architecture, authorization and authentication, RBAC and CBAC, JWT, gRPC and DI are.
 
 ## Chapter II
 
-### Монолитная архитектура
-Под монолитом понимают приложение как неделимую единицу. Традиционно монолитное решение — один исполняемый файл на стороне сервера и еще один — на стороне клиента.
+### Monolithic Architecture
+A monolith is defined as an application as a unit. Traditionally, a monolithic solution is one executable on the server side and another on the client side.
 
-Монолитная архитектура часто является хорошим вариантом для относительно небольшого или простого приложения с предсказуемой нагрузкой. Это, например, MVP (минимально жизнеспособный продукт) или веб-сайт, обслуживающий статический контент.
+A monolithic architecture is often a good option for a relatively small or simple application with a predictable load. For example, a minimum viable product (MVP) or a website that maintains static content.
 
-Традиционный подход к созданию приложений путем объединения всех функций в единую сущность, объединяющую интерфейс и серверную часть, по-прежнему актуален. Дело в том, что не всегда есть смысл в усложнении архитектуры. Если требования к сервису (например, к веб-сайту) включают только скорость, доступность и возможность обслуживания статического контента, который находится в свободном доступе, монолитная архитектура для таких целей — вполне естественный выбор. 
-
+The traditional approach to building applications by combining all functions into a single entity that combines the user interface and the server part is still relevant. The point is that it doesn't always make sense to complicate the architecture. If the requirements for a service (e.g., a website) include only speed, availability, and the ability to maintain static content that is freely available, then a monolithic architecture for such purposes is a natural choice. 
 
 ### SOA
 
-SOA (**S**ervice-**O**riented **A**rchitecture) - метод разработки программного обеспечения, использующий программные компоненты (называемые сервисами) для создания бизнес-приложений. 
+SOA (**S**ervice-**O**riented **A**rchitecture) is a software development method that uses software components (called services) to create business applications. 
 
-Каждый сервис предоставляет бизнес-возможности, причем сервисы могут взаимодействовать друг с другом будучи написанными на разных платформах и языках. Когда это используется? Для многократного использования сервисов в различных системах или для объединения независимых сервисов для выполнения сложных задач.
+Each service provides business functionality, and services can communicate with each other by being written in different platforms and languages. When is this used? To reuse services in different systems or to combine independent services to perform complex tasks.
 
-Например, многие приложения (даже внутри одной компании) требуют аутентификацию пользователя. Вместо того чтобы переписывать код аутентификации для всех бизнес-процессов, ты можешь создать единый сервис аутентификации и использовать его повторно для всех приложений.
+For example, many applications (even within the same company) require user authentication. Instead of rewriting the authentication code for each business process, you can create a single authentication service and reuse it for all applications.
 
-Давай посмотрим на основные **преимущества** сервис-ориентированной архитектуры.
+Let's take a look at the main **benefits** of a service-oriented architecture.
 
-1) *Сокращение времени выхода на рынок*. В случае когда уже имеются готовые сервисы, которые можно переиспользовать, время разработки системы может серьезно сократиться.
-
-2) *Эффективное обслуживание*. При развитой инфраструктуре обслуживать распределенную систему может быть проще в некоторых аспектах. Можно, например, обновлять сервисы по отдельности, не отключая всю систему целиком. А также сервисы можно хостить на разных машинах, что также даёт определенные преимущества
-
-3) *Модульность*. Благодаря разбиению системы на сервисы, становится легко модифицировать её части.
+1. *Reduced time to market*. If there are already existing services that can be reused, the development time of the system can be greatly reduced.
+2. *Efficient maintenance*. With a well-developed infrastructure, maintaining a distributed system can be easier in some aspects. For example, it is possible to update services individually without shutting down the entire system. Also, services can be hosted on different machines, which also has certain advantages.
+3. *Modularity*. Thanks to the separation of the system into services, it becomes easy to modify its parts.
 
 <div align="center">
 
@@ -42,15 +41,13 @@ SOA (**S**ervice-**O**riented **A**rchitecture) - метод разработк�
 
 </div>
 
-Итак, мы поняли, что SOA преследует замечательные идеи: упрощенное обслуживание, быстрый выход на рынок и т.д. Как это часто бывает, единого рецепта, как реализовать сервис-ориентированную архитектуру, нет. Однако есть набор принципов, следуя которым, ты сможешь достичь поставленной цели.
+So we realized that SOA is about great ideas: simplified service, faster time to market, etc. As is often the case, there is no single recipe for implementing a service-oriented architecture. However, there are a number of principles you can follow to get there.
 
-1) *Обеспечение совместимости*. Каждый сервис включает документы описания, определяющие функциональность сервиса, и как она используется.
+1. *Standard Service Contract*. Each service has descriptive documents that define the functionality of the service and how it will be used.
+2. *Loose coupling*. The fewer dependencies between services, the easier it is to modify them, because changes do not affect a large number of external components.
+3. *Abstraction*. For customers or users, the service is a black box. They don't need to know how it works. They only get information about what it does through service contracts and other documents that describe the service.
 
-2) *Слабые зависимости*. Чем меньше зависимостей между сервисами, тем проще их модифицировать, так как изменения не будут затрагивать большое число внешних компонентов.
-
-3) *Абстрагирование*. Для клиентов или пользователей сервис - это черный ящик. Они не обязаны знать, как он работает. Они лишь получают информацию о том, что он делает, через предоставленные контракты на обслуживание и другие документы с описанием сервиса.
-
-Теперь посмотрим, из чего состоит сервис-ориентированная архитектура.
+Now let's see what a service-oriented architecture consists of.
 
 <div align="center">
 
@@ -58,40 +55,40 @@ SOA (**S**ervice-**O**riented **A**rchitecture) - метод разработк�
 
 </div>
 
-- Сервис - основной «строительный блок» SOA. Каждый сервис имеет интерфейс, реализацию и контракт.
-    - Реализация - код сервиса.
-    - Интерфейс (Контракт) - способы взаимодействия других сервисов или систем с данным сервисом.
+- The service is the basic "building block" of SOA. Each service has an interface, an implementation and a contract.
+    - The implementation is the service code.
+    - Interface (Contract) means the way other services or systems interact with this service.
 
-- Поставщик сервиса создает, поддерживает и предоставляет один или несколько сервисов, которые могут использовать другие пользователи.
+- The service provider creates, supports and provides one or more services that can be used by other users.
 
-- Потребитель сервиса - тот, кто запрашивает у поставщика выполнение конкретного сервиса. Кстати, контракт как раз определяет правила, по которым поставщик и потребитель взаимодействуют друг с другом.
+- The service consumer is the one who requests the provider to perform a particular service. By the way, the contract defines the rules by which the provider and the consumer interact with each other.
 
-- Сервисный реестр - каталог доступных сервисов.
+- Service registry is a directory of available services.
 
-А как это все работает? Если сервисы более-менее независимы друг от друга, как они могут образовать целостную систему? Так вот, сервисы могут взаимодействовать с помощью установленных правил, определяющих передачу данных по сети. Эти правила также называют протоколами передачи данных. Например, сервисы могут взаимодействовать по RESTful API, SOAP, RPC-протоколы.
+And how does it all work? If services are more or less independent, how can they form a coherent system? Well, services can communicate with each other by means of established rules that define how data is transferred over the network. These rules are also called data transfer protocols. For example, services can communicate via RESTful APIs, SOAP, RPC protocols.
 
-### Микросервисная архитектура
-Микросервисная архитектура (MSA - **M**icro **S**ervice **A**rchitecture) - развитие SOA. Микросервисы очень похожи на сервисы, но как следует из названия, предоставляют более мелкий и атомарный бизнес-функционал. Микросервисы часто устраняют недостатки SOА в части масштабирования из-за возможного совместного использования ресурсов и делают ПО более совместимым с облачными корпоративными средами.
+### Microservice Architecture
+MSA — **M**icro **S**ervice **A**rchitecture is a development of SOA. Microservices eliminate the disadvantages of SOA (e.g., limited scalability due to possible resource sharing) and make software more compatible with business cloud environments.
 
-Для развертывания приложений на основе MSA часто используют контейнерные технологии, такие как Docker и Kubernetes.
+Container technologies such as Docker and Kubernetes are often used to deploy MSA-based applications.
 
-В микросервисной архитектуре приложение разбивается на ряд независимо развертываемых сервисов, которые взаимодействуют с помощью API-интерфейсов. Благодаря такому подходу каждый отдельный сервис можно развертывать и масштабировать независимо от других. В результате команды могут быстрее и чаще поставлять объемные и сложные приложения. В отличие от монолитного приложения, с микросервисной архитектурой команды могут быстрее внедрять новые возможности и вносить изменения, при этом им не приходится переписывать большие фрагменты существующего кода.
+In a Microservice Architecture, an application is divided into a number of independently deployable services that interact using API interfaces. With this approach, each individual service can be deployed and scaled independently of the others. As a result, teams can deliver large, complex applications faster and more frequently. Unlike a monolithic application, with a Microservice Architecture, teams can introduce new features and changes faster without having to rewrite large chunks of existing code.
 
-Класс, но чем отличается MSA и SOA? Нельзя говорить, что MSA всегда строго лучше SOA. Правильнее сказать, что каждая из архитектур имеет свое назначение. Давай посмотрим на различия MSA и SOA в табличке.
+But what is the difference between MSA and SOA? You cannot say that MSA is always strictly better than SOA. It is more correct to say that each architecture has a different purpose. Let's look at the differences between MSA and SOA in a table.
 
 | MSA                                                                            | SOA                                                                                                                                   |
 |--------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
-| Микросервисы используют, как правило, легковесные протоколы (REST/HTTP и т.д.) | SOA поддерживает мульти-протоколы.                                                                                                    |
-| Концентрируется на разделении задач.                                           | Концентрируется на повторном использовании.                                                                                           |
-| Используются простые системы обмена сообщениями.                               | Используется поставщик сервисов (так же называется Enterprise Service Bus (ESB) - сервисная шина) для коммуникации.                   |
-| Микросервисы использую подход «разделять как можно меньше архитектуры».        | SOA использует подход «разделять как можно больше архитектуры» (устраняется повторное использование - один из основных принципов SOA) |
-| Хорошо воспринимаются отказы (микросервисы практически независимы).            | Ошибки и отказы воспринимаются плохо в сравнении с MSA.                                                                               |
-| Каждый микросервис использует собственную независимую базу данных.             | Сервисы в SOA разделяют единое хранилище данных.                                                                                      |
-| Подходит для небольших веб-систем.                                             | Подходит для больших, сложных бизнес-приложений.                                                                                      |
+| Microservices usually use lightweight protocols (REST/HTTP, etc.)              | SOA supports multiprotocols.                                                                                                   |
+| Focuses on the division of tasks.                                              | Focuses on reuse.                                                                                           |
+| Uses simple messaging systems.                                                 | Uses a service provider (also called Enterprise Service Bus (ESB)) for communication.                   |
+| Microservices use the " divide as little architecture as possible" approach.   | SOA uses a " divide as much architecture as possible" approach (eliminates reuse, one of the basic principles of SOA) |
+| Failures are well taken care of (microservices are almost independent).        | Errors and failures are poorly handled in comparison to MSA.                                                                               |
+| Each microservice uses its own independent database.                           | Services in SOA share a single data repository.                                                                                      |
+| Suitable for small web systems.                                                | Suitable for large, complex business applications.                                                                                      |
 
-Граница между SOA и MSA очень условна и размыта, поэтому многие вещи из таблицы могут быть верны для обоих архитектур.
+The line between SOA and MSA is very arbitrary and vague, so many of the things in the table can be true for both architectures.
 
-Пример микросервисной архитектуры (Web API магазина) представлен на картинке снизу.
+An example of Microservice Architecture ("Web API store") is shown in the picture below.
 
 <div align="center">
 
@@ -99,98 +96,97 @@ SOA (**S**ervice-**O**riented **A**rchitecture) - метод разработк�
 
 </div>
 
-### Плюсы микросервисной архитектуры
-* Итеративная разработка. Архитектура программного обеспечения на основе микросервисов хорошо подходит для организации гибкой разработки ПО, основанной на итеративном подходе. Разбиение уже работающего приложения на отдельные, слабо связанные между собой сервисы означает, что новые возможности и функции могут быть проверены и добавлены без риска остановки приложения.
-* Гибкость. Микросервисы обеспечивают большую гибкость процесса разработки ПО сразу на нескольких уровнях. Это позволяет разным командам одновременно работать над разными сервисами и упрощает интеграцию в процесс разработки новых членов команды, ведь разделенный на отдельные функциональные части код легче читать и понимать.
-* Свобода в выборе технологического стека. В монолитной архитектуре, где сервисы тесно связаны, важно поддерживать согласованность технологий, используемых в приложении. Они также должны быть хорошо совместимы друг с другом, что характерно не для всех языков программирования и средств разработки ПО. Слабо связанные микросервисы обеспечивают гораздо большую свободу в выборе стека технологий. Вплоть до того, что команда разработчиков может даже создавать отдельные сервисы с очень разным набором инструментов разработки.
-* Доступность. Одним из самых больших преимуществ архитектуры микросервисов является то, что слабо связанные сервисы обеспечивают большую надежность приложения и более высокую доступность. Если одна служба выходит из строя, то это, как правило, не влияет на остальную часть приложения, которое продолжит функционировать для пользователей.
-* Масштабируемость. Еще одним плюсом микросервисов является то, что этот подход хорошо подходит для масштабирования приложений. Модульность микросервисов позволяет легко добавлять новые функции прямо в работающее приложение. Хотя первоначальные затраты на архитектуру микросервисов выше, ее масштабирование может быть значительно дешевле, чем у монолитного приложения, благодаря сочетанию уже упомянутых сильных сторон.
-* Производительность. Также за счет разделения служб и нагрузки между несколькими серверами возможно значительно повысить производительность.
+### Advantages of Microservice Architecture
+* Iterative development. A microservices-based software architecture lends itself well to an agile software development organization based on an iterative approach. By decomposing a running application into separate, loosely coupled services, new features and functionality can be tested and added without the risk of stopping the application.
+* Flexibility. Microservices provide greater flexibility in the software development process at several levels at once. This allows different teams to work on different services at the same time, and makes it easier to bring new team members into the development process because code that is broken into separate functional pieces is easier to read and understand.
+* Freedom to choose the technology stack. In a monolithic architecture, where services are tightly coupled, it is important to maintain consistency in the technologies used in the application. They must also be compatible with each other, which is not the case with all programming languages and software development tools. Loosely coupled microservices provide much greater freedom in the choice of technology stack. To the point where a development team can even create separate services with a completely different set of development tools.
+* Availability. One of the biggest benefits of microservice architecture is that loosely coupled services provide greater application reliability and availability. If one service fails, the rest of the application usually continues to work for users.
+* Scalability. Another advantage of microservices is that this approach is well suited for scaling applications. The modularity of microservices makes it easy to add new features directly to a running application. Although the initial cost of a microservices architecture is higher, it can be much cheaper to scale than a monolithic application due to a combination of the benefits mentioned above.
+* Performance. You can also significantly improve performance by distributing services and loads across multiple servers.
 
-### Минусы микросервисной архитектуры
-* Сложность синхронизации. Распределенная система, такая как микросервисы, неизбежно создает дополнительную сложность, поскольку ее части необходимо синхронизировать таким образом, чтобы они могли работать как единая программная система. И если службы разделены между серверами, тебе придется подготовить инфраструктуру для взаимодействия микросервисов.
-* Более высокие первоначальные затраты. Хотя попытки значительно масштабировать монолитное приложение могут оказаться сущим кошмаром, который приводит к резкому росту прямых затрат на разработку, архитектура микросервисов требует более высоких первоначальных затрат. Для каждого микросервиса требуется своя команда разработчиков (хотя одна команда может отвечать и за несколько). Кроме того, придется наладить и процесс автоматического тестирования и развертывания (CI/CD). Всё это приводит к более высоким первоначальным затратам.
-* Потребность в DevOps. Распределенная система, такая как микросервисы, требует квалифицированной оркестровки, обычно с использованием Kubernetes и других инструментов и процессов DevOps. Это означает, что  стоит тебе нанять хотя бы одного инженера DevOps, что также увеличит расходы.
+### Disadvantages of Microservice Architecture
+* Synchronization complexity. A distributed system, such as microservices, inevitably adds complexity because its parts must be synchronized to work as a single software system. And when services are distributed across servers, you need to prepare the infrastructure for microservices to work together.
+* Higher upfront costs. While trying to significantly scale a monolithic application can be a nightmare, resulting in dramatically higher direct development costs, a microservices architecture requires higher upfront costs. Each microservice requires its own development team (although one team may be responsible for multiple microservices). In addition, an automated testing and deployment (CI/CD) process must be set up. All of this leads to higher upfront costs.
+* The need for DevOps. A distributed system like microservices requires skilled orchestration, usually using Kubernetes and other DevOps tools and processes. This means you'll need to hire at least one DevOps engineer, which also increases costs.
 
-### Аутентификация и авторизация
+### Authentication and authorization
 
-Страшные, очень похожие друг на друга слова. Что они означают? Дополнительно рассмотрим термин *идентификация*.
+Scary and very similar words. What do they mean? In addition, let's consider the term *identification*.
 
-**Идентификация** — процедура, в результате выполнения которой для субъекта идентификации выявляется его идентификатор, однозначно определяющий этого субъекта в информационной системе. Если простыми словами, то это процесс определения, *кто* делает запрос к системе. 
+**Identification** is a procedure which results in an identifier for an identification subject that uniquely identifies that subject in the information system. In simple words, it is the process of determining *who* makes a request to the system. 
 
-**Аутентификация** — процедура проверки подлинности, например проверка подлинности пользователя путем сравнения введенного им пароля с паролем, сохраненным в базе данных. Проще говоря, это проверка, что тот, кто делает запрос, не выдает себя за кого-то другого.
+**Authentication** is checking the authenticity of a user by comparing the password he or she enters with the password stored in the database. Simply put, it is a check that the person making the request is not pretending to be someone else.
 
-**Авторизация** — предоставление определенному лицу или группе лиц прав на выполнение определенных действий. После успешной идентификации и авторизации пользователю надо дать права что-то делать в системе в соответствии с выбранной моделью доступа к ресурсам.
+**Authorization** means granting a certain person or group of people rights to perform certain actions. After successful identification and authorization, the user must be given the rights to do something in the system in accordance with the chosen model of access to resources.
 
-С этими процедурами ты встречаешься постоянно. Как пример можно рассмотреть доступ к Сбербанк Онлайн. Сначала ты вводишь логин (или номер телефона), по которому система определяет, в какую учетную запись ты пытаешься войти. Если идентификация успешна, переходим к процедуре аутентификации. Ты вводишь свой пароль. В случае успешного ввода пароля система может запросить ещё какой-то код (например, код из SMS) - это называется **двухфакторной аутентификацией**. В случае успеха, переходим к процедуре авторизации: система выдает права доступа к информации и твоих счетах, кредитах, бонусах и т.д.
+You deal with these procedures all the time. Take Sberbank Online as an example. First, you enter your username (or phone number), which the system uses to determine which account you are trying to log in to. If identification is successful, move on to the authentication procedure. You enter your password. If you successfully enter a password, the system may ask for another code (for example, a code from an SMS) — this is called **two-factor authentication**. If it's successful, move on to the authorization procedure: the system gives you access rights to information about your accounts, loans, bonuses, etc.
 
-### Модели доступа к ресурсам
+### Access control models
 
-Администрирование безопасности системы может быть очень дорогим и неэффективным, особенно если рассматривать каждого нового пользователя индивидуально и каждый раз принимать индивидуальное решение о его правах. Кроме того, в таком случае возможны ошибки, и, как следствие, утечки информации. Таким образом, очевидна необходимость в упорядоченном контроле прав пользователей с помощью проверенных моделей доступа.
+System security administration can be very expensive and inefficient, especially if you consider each new user individually and make individual decisions about their rights each time. Moreover, in this case, errors and, as a consequence, information leaks are possible. Thus, there is a clear need for an orderly control of user rights by means of proven access models.
 
-В теории баз данных выделяют следующие модели доступа к данным:
+In the theory of databases there are the following access models:
 
-- Мандатная (MAC - Mandatory Access Control)
-- Избирательная (DAC - Discretionary Access Control)
-- На основе ролей (RBAC - Role-Based Access Control)
-- На основе атрибутов (ABAC - Attribute-Based Access Control)
+- MAC — Mandatory Access Control;
+- DAC — Discretionary Access Control;
+- RBAC — Role-Based Access Control;
+- ABAC — Attribute-Based Access Control.
 
-Но, поскольку мы рассматриваем доступ именно к *системе*, выделяются только две модели - Role-Based Access Control и Claim-Based Access Control (RBAC и CBAC).
+But since we are considering access to the *system*, only two models stand out — Role-Based Access Control and Claim-Based Access Control (RBAC and CBAC).
 
 #### **RBAC**
-Права пользователей группируются в группы, называемые **ролями**. И уже роли назначаются **субъектам**. Таким образом, исчезает сложность выделения прав: они уже логически сгруппированы в некоторую роль. Примеры ролей в случае с магазином: продавец, консультант (консультант, например, может не иметь доступа к методам сервиса продаж), покупатель, курьер и т.д.
+User permissions are grouped into **roles**. And roles are assigned to **subjects**. So the difficulty of assigning rights disappears: they are already logically grouped in some role. Examples of roles in the case of our store: salesman, consultant (for example, consultant may not have access to sales service methods), buyer, courier, etc.
 
-Частой ошибкой при использовании RBAC является группировка пользователей в группы и выделение им прав вместо *группировки прав доступа* в роли, которые затем выделяются пользователям. 
+A common mistake with RBAC is to group users and assign rights to them instead of *grouping access rights* into roles, which are then assigned to users. 
 
-Преимуществом RBAC можно назвать Segregation of Duties - разделение полномочий, которое часто соответствует реальному положению дел в бизнесе.
+An advantage of RBAC is the separation of duties, which is often the reality of the business.
 
-Недостатком RBAC является необходимость детальной разработки ролевой модели.
+A disadvantage of RBAC is the need to develop a detailed role model.
 
-Пример на c# можно посмотреть в папке materials.
-
+You can see an example in C# in the materials.
 
 #### **CBAC**
 
-«Claim» можно перевести по-разному, но сейчас будем использовать термин «утверждение». Что такое утверждение? Можно рассматривать его как некоторый тег/ярлык, повешенный на пользователя. Примеры: пенсионер, европеец, администратор и т.д. 
+"Claim" can mean many things, but for now we will use the term "assertion". What is an assertion? You can think of it as a kind of tag/label attached to a user. Examples: pensioner, European, administrator, etc. 
 
-Данный подход явно шире, чем RBAC, поскольку модель, основанную на требованиях, легко свести к ролевой, оставив только одно утверждение с типом «роль» и присваивать ему значения «консультант», «администратор» и т.д. Смысл именно в том, что мы делаем более гибкую систему, добавляя несколько утверждений с разными типами.
+This approach is clearly broader than RBAC, because it is easy to reduce a requirements-based model to a role-based model by leaving only one assertion of type "role" and assigning it the values "consultant", "administrator", etc. The point is that we create a more flexible system by adding multiple statements of different types.
 
-В разных языках присутствуют разные средства для реализации рассмотренных моделей.
+Different languages have different tools for implementing the models in question.
 
-Пример на c# можно посмотреть в папке materials.
+You can see an example in C# in the materials.
 
-### JWT токены
+### JWT tokens
 
-Известно, что по методологии REST сервер не должен ничего знать о предыдущих состояниях какого-либо клиента. Клиент посылает запрос серверу сразу вместе со всей необходимой информацией.
+It is known that according to the REST methodology the server does not need to know anything about the previous states of any client. The client sends a request to the server with all the necessary information at once.
 
-Поскольку сервер не хранит данные о состоянии клиента, а в практически любой современной системе используется авторизация, необходим способ «сигнализировать» серверу о том, что клиент, посылающий запрос, уже прошёл авторизацию. Да, можно было бы каждый раз в параметрах запроса посылать логин и пароль, однако это крайне небезопасно. Решение - **JSON Web Token** (или **JWT**).
+Since the server does not store any data about the client's state, and almost every modern system uses authorization, you need some way to "signal" to the server that the client sending the request is already authorized. Yes, you could send a login and password each time in the request parameters, but this is extremely insecure. The solution is **JSON Web Token** (or **JWT**).
 
-Идея токенов не такая сложная: давай вместо логина и пароля в базе хранить токен и id пользователя, а токен выдавать при первом запросе с помощью некоторой хеш-функции от каких-то уникальных свойств пользователя (его id, логин, пароль). Таким образом, при последующих запросах не потребуется передача логина и пароля, достаточно передать токен. Часто токену устанавливают время жизни, по истечении которого он становится недействительным.
+The idea of tokens isn't that complicated: let's store the user's token and id in the database instead of login and password, and give the token on the first request using a hash function of some unique user properties (id, login, password). That way, subsequent requests don't require username and password, just a token. The token is often given a lifetime, after which it becomes invalid.
 
-JWT имеет преимущества: он самодостаточен, всю необходимую информацию можно хранить в самом токене. Рассмотрим устройство токена.
+JWT has advantages: it is self-sufficient, all necessary information can be stored in the token itself. Let's have a look at the structure of a token.
 
-#### Структура токена
+#### Token Structure
 
-Токен состоит из 3 основных частей:
+The token consists of 3 main parts:
 
-- Заголовок (Header)
-- Нагрузка (Payload)
-- Подпись (Signature)
+- Header,
+- Payload,
+- Signature.
 
-Заголовок и нагрузка формируются отдельно, затем на их основе вычисляется подпись.
+The header and payload are formed separately, then the signature is created based on them.
 
-Заголовок состоит из полей «тип» и «алгоритм» (хеширования подписи):
+The header consists of the fields "type" and "algorithm" (hashing signature):
 ```
 {
     "typ": "JWT",
     "alg": "HS256"
 }
 ```
-[Официальный сайт](jwt.io) предлагает только два варианта алгоритма хеширования: HS256 и RS256.
+[Official website](jwt.io) offers only two hashing algorithms: HS256 and RS256.
 
-Нагрузка - любые данные, которые мы хотим держать внутри токена. Однако стандарт предусматривает несколько заранее определенных полей: iss (issuer), sub (subject), exp (expire time), iat (issued at) и т.д.
+The payload is any data we want to keep inside the token. However, the standard provides several predefined fields: iss (issuer), sub (subject), exp (expire time), iat (issued at), etc.
 
-Пример payload:
+An example of payload:
 ```
 {
     "iss": "Cool dev team",
@@ -199,44 +195,44 @@ JWT имеет преимущества: он самодостаточен, вс
 }
 ```
 
-**Важно!** Нагрузка не шифруется, поэтому будь осторожны.
+** Important!** The payload is not encrypted, so be careful.
 
-Наконец, подпись вычисляется на основе заголовка и нагрузки. 
+Finally, the signature is created based on the header and the payload. 
 
-Сначала заголовок и нагрузка преобразуются из формата JSON в base64Url:
+First, the header and the payload are converted from JSON format to base64Url:
 
 ```
 Header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 Payload: eyJpc3MiOiJDb29sIGRldiB0ZWFtIiwic3ViIjoiYXV0aCIsIm15X2F0dHJfZm9yX2RhdGEiOiJJIGxvdmUgaWNlIGNyZWFtISJ9
 ```
 
-Затем, строки объединяются через точку и хешируются указанным алгоритмом. Пусть пароль пользователя - `qwerty123`. Тогда получим подпись следующей функцией:
+Then, the strings are joined with a dot and hashed using the specified algorithm. Let the user's password be `qwerty123`. Then we get the signature with the following function:
 
 ```python
 HS256('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9' + '.' + 'eyJpc3MiOiJDb29sIGRldiB0ZWFtIiwic3ViIjoiYXV0aCIsIm15X2F0dHJfZm9yX2RhdGEiOiJJIGxvdmUgaWNlIGNyZWFtISJ9', 'qwerty123') = m-XiMqPrcoXQrORjJPjddx53DhB8lgAB-WGaA2iQGVs
 ```
 
-Осталось получить сам токен, для этого надо соединить через точку header, payload и signature:
+The only thing left to do is to get the token itself, so we have to connect the header, payload and signature through a point:
 ```
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJDb29sIGRldiB0ZWFtIiwic3ViIjoiYXV0aCIsIm15X2F0dHJfZm9yX2RhdGEiOiJJIGxvdmUgaWNlIGNyZWFtISJ9.m-XiMqPrcoXQrORjJPjddx53DhB8lgAB-WGaA2iQGVs
 ```
-Полученный токен можно протестировать [на официальном сайте](https://jwt.io/).
+The received token can be tested [on the official website](https://jwt.io/).
 
-Не зная приватного ключа (пароля), нельзя изменить подпись. При некорректной подписи нельзя поменять данные (токен будет недействительным из-за неверной подписи). Таким образом, данные на сервере защищены от изменений.
+Without knowing the private key (password) you cannot change the signature. If the signature is wrong, the data cannot be changed (the token is invalid because of the wrong signature). In this way, the data on the server is protected against changes.
 
-Все вышеперечисленные действия можно проделать самостоятельно. Это отличное упражнение для того, чтобы убедиться, что JWT работает не как магия, а довольно простым и понятным способом.
+You can do all of the above steps on your own. This is a good exercise to make sure that JWT doesn't work like magic, but in a fairly simple and straightforward way.
 
-После первого входа по паролю клиенту вернется сгенерированный JWT. При каждом следующем запросе клиент будет передавать API уже полученный JWT токен способом, который устанавливает API (как вариант, через заголовок или через параметр запроса). Сервер, при получении JWT, декодирует заголовок и нагрузку (проверяя зарезервированные поля). Затем составляется подпись (сервер знает секретный ключ / пароль пользователя), и, если она совпадает с подписью из токена, авторизация пройдена.
+After the first login with password, the client will return the generated JWT. With each subsequent request, the client passes the JWT token it has already received to the API in the manner specified by the API (for example, via a header or request parameter). When the server receives the JWT, it decodes the header and the payload (checking the reserved fields). Then it performs a signature (the server knows the user's secret key/password), and if it matches the signature from the token, the authorization is passed.
 
-Конечно, можно и самостоятельно реализовать выше описанный алгоритм. Однако существует множество библиотек для авторизации с помощью JWT. Подробнее о них можно прочитать на официальном портале [JWT](https://jwt.io/libraries).
+Of course, you can implement the above algorithm yourself. However, there are many libraries available for authorization using JWT. You can read more about them on the official [JWT](https://jwt.io/libraries) portal.
 
 ### gRPC
 
-Методология REST приобрела невероятную популярность среди разработчиков. Однако в последние годы стала активно развиваться и другая технология - gRPC.
+The REST methodology has become incredibly popular among developers. However, in recent years, another technology — gRPC — has been actively developed.
 
-gRPC - современная высокопроизводительная платформа с открытым кодом, развивающая устаревший протокол удаленного вызова процедур RPC (Remote Procedure Call).
+gRPC is a modern, high-performance open source platform that evolves the aging RPC (Remote Procedure Call) protocol.
 
-Цель RPC - сделать вызов удаленных процедур наиболее похожим на вызов локальной процедуры. Взаимодействие в RPC осуществляется по модели клиент-сервер. Клиент и сервер взаимодействуют не обычными HTTP запросами, а используют удаленный вызов процедур. Для указания формы контракта на вызываемые функции и типы данных используется язык IDL (Interface Description Language). Принцип работы RPC можно увидеть на картинке снизу.
+The goal of RPC is to make remote procedure calls as similar as possible to local procedure calls. The interaction in RPC is based on the client-server model. The client and server do not interact with normal HTTP requests, but with remote procedure calls. The IDL (Interface Description Language) is used to specify the contract for the functions and data types to be called. You can see how RPC works in the image below.
 
 <div align="center">
 
@@ -244,17 +240,15 @@ gRPC - современная высокопроизводительная пл�
 
 </div>
 
-gRPC копирует этот архитектурный стиль взаимодействия клиент-сервер с помощью вызовов функций. Получается, что gRPC - не новая концепция, а лишь развитие старых технологий.
+gRPC copies this architectural style of client-server interaction through function calls. It turns out that gRPC is not a new concept, but only an evolution of older technologies.
 
-Давай посмотрим, почему же gRPC приобрел такую популярность в последний годы.
+Let's take a look at why gRPC has become so popular in recent years.
 
-1. Абстракция - это просто: используется вызов функции место HTTP запросов, которые могут сбивать с толку при чтении кода.
+1. Abstraction is simple: it uses function calls to place HTTP requests that can be confusing when reading the code.
+2. Supports many languages.
+3. Good request execution speed (efficiency).
 
-2. Поддерживается на многих языках.
-
-3. Хорошая скорость выполнения запросов (эффективность).
-
-Также gRPC применяется в микросервисной архитектуре, про которую ты только что прочитал. Как известно, микросервисы могут быть написаны на разных языках, и один из микросервисов может вызывать множество других микросервисов. Используя gRPC, мы абстрагируемся от технологий, используемых в нужных нам микросервисах. Всё сводится к классическому вызову процедуры в коде.
+Also gRPC is used in Microservice Architecture you just read about. As you know, microservices can be written in different languages and one microservice can call many other microservices. Using gRPC, we abstract away from the technology used in the microservices we want. It all comes down to a classic procedure call in the code.
 
 <div align="center">
 
@@ -262,33 +256,31 @@ gRPC копирует этот архитектурный стиль взаим�
 
 </div>
 
-Типичное клиентское приложение gRPC вызывает локальную внутрипроцессную функцию, реализующую бизнес-операцию. Внутри эта локальная функция (по-сути, заглушка - stub) вызывает другую функцию на удаленном компьютере. То, что представляется локальным вызовом, по сути, становится прозрачным внепроцессным вызовом удаленной службы. «Под капотом» RPC реализует сетевой обмен данными типа «point to point», сериализацию и выполнение кода на разных компьютерах.
+A typical gRPC client application calls a local in-process function that implements a business operation. Internally, this local function (basically a stub) calls another function on the remote computer. What appears to be a local call essentially becomes a transparent out-of-process call to a remote service. "Under the hood" RPC implements point to point network communication, serialization and code execution on different computers.
 
-Таким образом, код приложения ориентирован на бизнес-функции, в то время как gRPC обрабатывает коммуникации.
+Thus, the application code is focused on business functions, while the gRPC handles communications.
 
-Нельзя ещё раз не отметить производительность gRPC. Если gRPC, по-сути, использует те же самые идеи, что были предложены в классическом RPC, что тогда делает его особенным? Ответ: HTTP / 2, а также односторонние и двусторонние стримы, что позволяют использовать gRPC для потоковой и событийной передачи данных в обе стороны.
+Once again, it is impossible not to note the performance of gRPC. If gRPC basically uses the same ideas as classical RPC, then what makes it special? The answer: HTTP / 2, as well as one-way and two-way streaming, which allows gRPC to be used for streaming and event-driven data transfer in both directions.
 
-В 2015 году Google запустил поддержку протокола HTTP / 2 на замену старому HTTP / 1.1 в браузере Chrome. В традиционном протоколе HTTP невозможно отправить несколько запросов или получить несколько ответов вместе в одном соединении. Для каждого из них необходимо будет создать новое соединение. Этот вид мультиплексирования запроса / ответа стал возможным в HTTP / 2. Он позволяет получать полезные данные из нескольких запросов с одним и тем же заголовком, таким образом идентифицируя его как один запрос. 
+In 2015, Google launched support for HTTP / 2 to replace the old HTTP / 1.1 in Chrome browser. With the traditional HTTP protocol, you can't send multiple requests or get multiple responses together in one connection. A new connection would have to be created for each of them. This type of request/response multiplexing is now possible in HTTP/2. It allows getting useful data from multiple requests with the same header, thus identifying it as a single request. 
 
-Кроме того, была решена проблема огромных заголовков в запросах. HTTP / 2 имеет очень интересную стратегию под названием HPack, чтобы справиться с этим. Во-первых, все в HTTP / 2 кодируется перед отправкой, включая заголовки. Это действительно помогает с производительностью, но это не самое главное в сжатии заголовков. HTTP / 2 отображает заголовок как на стороне клиента, так и на стороне сервера. Исходя из этого, HTTP / 2 может узнать, содержит ли заголовок то же значение, и отправляет значение заголовка, только если оно отличается от предыдущего заголовка.
+Besides, the problem of huge headers in requests has been solved. HTTP / 2 has a very interesting strategy called HPack to deal with this. First of all, everything in HTTP / 2 is encoded before it is sent, including the headers. This really helps with performance, but it's not the most important thing about header compression. HTTP / 2 displays the header on both client and server sides. Based on this, HTTP / 2 can find out if the header contains the same value, and sends the header value only if it is different from the previous header.
 
-gRPC - это бинарный протокол, использующий для сериализации своих фреймов протокол от Google - protobuf.
+gRPC is a binary protocol that uses the protobuf protocol from Google to serialize its frames.
 
 #### Protobuf
 
-Осталось поговорить про Protobuf (от Protocol Buffer) - наиболее часто используемый язык определения интерфейса (IDL). Здесь хранятся основные данные и функциональные контракты в виде прото-файла.
+Let's talk about Protobuf (Protocol Buffer), the most commonly used Interface Definition Language (IDL). This is where the basic data and functional contracts are stored as a proto file.
 
-Описываются контракты в файлах с расширением `.proto`. Основываясь на прото-файле, компилятор `protoc` генерирует код как клиента, так и сервера. Код включает в себя:
+The contracts are described in files with the extension `.proto`. Based on the proto file, the `protoc` compiler generates both client and server code. The code includes:
 
-- Типизированные объекты, разделяемые клиентом и сервером.
+- Typed objects shared by client and server.
+- A typed base class that implements all network communication, which you can later inherit and extend.
+- A client stub that calls the necessary gRPC services to call a remote procedure.
 
-- Типизированный базовый класс, реализующий всё взаимодействие по сети, который можно позже унаследовать и расширить.
+At runtime, each message is serialized into a standard Protobuf representation and sent from the client to the server (or vice versa). Unlike JSON or XML, Protobuf messages are serialized into a binary byte sequence.
 
-- Заглушка клиента (client stub), которая вызывает необходимые службы gRPC для вызова удаленной процедуры.
-
-Во время выполнения, каждое сообщение сериализуется в стандартное представление Protobuf и посылается от клиента к серверу (или наоборот). В отличие от JSON или XML, Protobuf сообщения сериализуются в бинарную последовательность байтов.
-
-Пример, как выглядит proto-файл для [Hello, world!](https://github.com/grpc/grpc-go/tree/master/examples/helloworld) с использованием gRPC на Go представлен ниже.
+An example of what a proto file for [Hello, world!](https://github.com/grpc/grpc-go/tree/master/examples/helloworld) looks like using gRPC on Go is shown below.
 
 ```proto
 // Copyright 2015 gRPC authors.
@@ -331,15 +323,15 @@ message HelloReply {
 }
 ```
 
-gRPC предлагает комплексную поддержку в большинстве популярных стеков разработки, включая Java, JavaScript, C#, Go, Swift и NodeJS.
+gRPC provides full support in most popular development stacks, including Java, JavaScript, C#, Go, Swift, and NodeJS.
 
-Таким образом, gRPC - интересная замена REST API, которую можно использовать в своих проектах. Ты можешь дополнительно рассмотреть, что такое метаданные, как работает потоковая передача, перехватчики и про балансировку нагрузки в gRPC. Это довольно интересная тема, а главное - бурно развивающаяся. 
+So, gRPC is an interesting replacement for the REST API that you can use in your projects. You can take a further look at what metadata is, how streaming works, interceptors, and about load balancing in gRPC. It's a pretty interesting topic, and more importantly, it's rapidly evolving. 
 
-### Dependency Injection, IoC-контейнеры
+### Dependency Injection, IoC-container
 
-Напоследок поговорим про очень интересный паттерн, который используется при проектировании программных компонентов - внедрение зависимостей (Dependency Injection, DI).
+To finish, let's talk about a very interesting pattern that is used in the design of software components — Dependency Injection (DI).
 
-В соответствии с принципом единой ответственности (SRP), объект отдает заботу о построении требуемых ему зависимостей внешнему общему механизму (Dependency Injector). Вводится понятие DI-контейнера или IoC-контейнера, который сохраняет конкретные реализации заданного интерфейса или базового класса и позже «прокидывает» их в конструкторы классов.
+According to the Single Responsibility Principle (SRP), an object hands over the care of building the dependencies it requires to an external generic mechanism (Dependency Injector). The concept of DI-container or IoC-container is introduced, which saves specific implementations of a given interface or base class and later "injects" them into class constructors.
 
 <div align="center">
 
@@ -347,7 +339,7 @@ gRPC предлагает комплексную поддержку в боль�
 
 </div>
 
-Таким образом, в коде не вызывается явно конструктор класса. Класс, в который зависимость прокидывается, не знает ничего о прокидываемой реализации, он пользуется лишь интерфейсом. Это позволяет с легкостью подменять реализацию интерфейсов в программе.
+Thus the code does not explicitly call the constructor of the class. The class into which the dependency is injected does not know anything about the injected implementation, it just uses the interface. This makes it easy to swap implementations of interfaces in a program.
 
 <div align="center">
 
@@ -355,32 +347,32 @@ gRPC предлагает комплексную поддержку в боль�
 
 </div>
 
- Этот паттерн реализован в .NET из коробки в ASP.NET и в других языках или фреймворках:
-* Java Spring: основными пакетами Spring Framework IoC контейнера являются org.springframework.beans и org.springframework.context;
-* GO: [Wire](https://github.com/google/wire) от Google и [Fx](https://github.com/uber-go/fx) от Uber (там внутри используется [dig](https://github.com/uber-go/dig));
+This pattern is implemented in .NET out of the box in ASP.NET and in other languages or frameworks:
+* Java Spring: the main packages of the Spring Framework IoC container are org.springframework.beans and org.springframework.context;
+* GO: [Wire](https://github.com/google/wire) from Google and [Fx](https://github.com/uber-go/fx) from Uber (It uses [dig](https://github.com/uber-go/dig));
 * Python: [opyoid](https://github.com/illuin-tech/opyoid) 
 
-Пример на c# можно посмотреть в папке materials.
+You can see an example in c# in the materials.
 
 ## Chapter III
 
-1. Если в блоке 2 не был использован паттерн Dependency injection, то в этом блоке он обязательно должен быть. Реализуй прокидывание реализаций, используя интерфейсы через IOC-контейнер.
-2.  Необходимо реализовать сервис авторизации (отдельное приложение), используя который можно будет аутентифицировать и авторизовать пользователей для магазина бытовой техники.
-   2.1. Сервис авторизации должен иметь своё хранилище (PostgreSQL). Для этого создай новую базу данных и прокидывай строку подключения внутрь своего сервиса (Не новая таблица, а новая база!).
-   2.2. Сервис авторизации должен предоставлять взаимодействие только лишь посредством протокола gRPC. Настрой его в качестве gRPC сервера, опиши .proto файл, с описанием предоставляемых методов.
-   2.3. Сервис авторизации должен предоставлять следующие методы:
-    2.3.1. Создание пользователя по входным данным (почта, имя, фамилия, номер телефона, пароль), возвращает подписанный токен.
-    2.3.2. Необходимо соблюсти один из важнейших принципов компьютерной безопасности: система не должна хранить пароли своих пользователей в открытом виде. Пароли в базе необходимо хранить в захэшированном виде с солью (произвольной сконкатенированной до хэширования строкой). Также нельзя брать устаревшие и имеющие уязвимости алгоритмы хэширования md5 и sha1. Таким образом, даже если твоя база данных попадет в руки злоумышленников, они не узнают реальные пароли, которыми пользуются твои клиенты.
-    2.3.3. Проверка пары логин-пароль (аутентифицировать пользователя), возвращает токен.
-    2.3.4. Изменение пароля пользователя
-    2.3.5. Метод восстановления пароля: Отправки пароля на почту пользователя (Саму отправку на почту реализовывать не нужно. Вместо этого, реализовать заглушку отправки на почту в виде вывода пароля в консоль сервиса авторизации)
-3. Добавить метод регистрации (/register), авторизации(/auth), восстановления пароля(/reset) для магазина бытовой техники. Данные методы не подвергаются аутентификации, а всего лишь ходят в сервис авторизации для проверки или создания данных.
-4. Реализовать авторизацию ручек всех API на основе верификации в сервисе аутентификации. Для аутентификации пользователя необходимо ходить в сервис авторизации и подтверждать валидность токена. Если токен валиден, то метод доступен, если нет - возвращать 401.
-   4.1. Авторизацию в методах контроллера необходимо сделать на основе самописного атрибута авторизации, логика обработки которого лежит в middleware приложения. Т.е. прежде чем пустить запрос в обработчик, необходимо аутенцифицировать пользователя.
-   4.2. JWT токен необходимо передавать в Authorization header.
+1. If the Dependency injection pattern was not used in block 2, it must be used in this block. Implement injection implementations using interfaces through the IOC container.
+2. It is necessary to implement an authorization service (a separate application) that will be used to authenticate and authorize users to the appliance store.
+    
+    * The authorization service must have its own storage (PostgreSQL). To do this, create a new database and inject a connection string into your service (not a new table, but a new database!).
+    * The authorization service must communicate using the gRPC protocol only. Configure it as a gRPC server, describe the .proto file describing the methods provided.
+    * The authorization service must provide the following methods:
+         - Creating a user from input data (email, first name, last name, phone number, password) returns a signed token.
+         - One of the most important principles of computer security must be respected: the system must not store the passwords of its users in plain text.Passwords in the database should be stored in hashed form with salt (an arbitrary concatenated string before hashing).Also, you cannot use outdated and vulnerable md5 and sha1 hashing algorithms. This way, even if your database falls into the hands of intruders, they won't know the real passwords used by your clients.
+         - Verifying the username-password pair (authenticating the user) returns the token.
+         - Changing the user password
+         - Password recovery method: Send password to user's email (You don't need to implement sending it to the email itself. Instead, implement a stub for sending to email in the form of password output to authorization service console)
+3. Add a registration (/register), authorization (/auth), and password recovery (/reset) method to the appliance store. These methods are not authenticated, but only go to the authorization service to verify or create data.
+4. Implement endpoint authorization of all APIs based on verification in the authentication service.To authenticate the user, you must go to the authentication service and confirm the validity of the token. If the token is valid, the method is available; if not, it returns 401.
+    * Authorization in controller methods should be based on a self-written authorization attribute whose logic is in the middleware of the application. That is, you must authenticate the user before sending the request to the handler.
+    * The JWT token must be passed in the Authorization header.
 
-Т.е. аутентификатор (middleware) ходит в написанный тобой сервис авторизации по gRPC и в случае успеха пускает в обработчик. 
+I.e. the authenticator (middleware) goes to the authorization service you wrote via gRPC and if successful, passes it to the handler. 
 
-**Важно!** Не забудь, что gRPC работает поверх http/2
+** Important! ** Don't forget that gRPC runs on top of http/2
 
-💡 [Нажми сюда](https://forms.yandex.ru/cloud/6470652cc769f11591b7a285/), **чтобы поделиться с нами обратной связью на этот проект**. Это анонимно и поможет команде Продукта сделать твоё обучение лучше.
