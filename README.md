@@ -10,7 +10,7 @@
 
 ### Introduction
 
-In this block you will learn what a service-oriented architecture, Microservice Architecture, authorization and authentication, RBAC and CBAC, JWT, gRPC and DI are.
+In this block, you will learn about Service Oriented Architecture, Microservice Architecture, authorization and authentication, RBAC and CBAC, JWT, gRPC, and DI.
 
 ## Chapter II
 
@@ -61,34 +61,34 @@ Now let's see what a service-oriented architecture consists of.
 
 - The service provider creates, supports and provides one or more services that can be used by other users.
 
-- The service consumer is the one who requests the provider to perform a particular service. By the way, the contract defines the rules by which the provider and the consumer interact with each other.
+- The service consumer is the one who requests the provider to perform a particular service. The contract defines the rules by which the provider and consumer interact.
 
-- Service registry is a directory of available services.
+- The Service registry is a directory of available services.
 
-And how does it all work? If services are more or less independent, how can they form a coherent system? Well, services can communicate with each other by means of established rules that define how data is transferred over the network. These rules are also called data transfer protocols. For example, services can communicate via RESTful APIs, SOAP, RPC protocols.
+And how does it all work? If services are more or less independent, how can they form a coherent system? Well, services can communicate with each other using established rules that define how data is transferred over the network. These rules are called data transfer protocols. For example, services can communicate using RESTful APIs, SOAP, RPC protocols.
 
 ### Microservice Architecture
-MSA — **M**icro **S**ervice **A**rchitecture is a development of SOA. Microservices eliminate the disadvantages of SOA (e.g., limited scalability due to possible resource sharing) and make software more compatible with business cloud environments.
+MSA — **M**icro**s**ervice **A**rchitecture is an evolution of SOA. Microservices eliminate the drawbacks of SOA (e.g., limited scalability due to potential resource sharing) and make software more compatible with enterprise cloud environments.
 
 Container technologies such as Docker and Kubernetes are often used to deploy MSA-based applications.
 
-In a Microservice Architecture, an application is divided into a number of independently deployable services that interact using API interfaces. With this approach, each individual service can be deployed and scaled independently of the others. As a result, teams can deliver large, complex applications faster and more frequently. Unlike a monolithic application, with a Microservice Architecture, teams can introduce new features and changes faster without having to rewrite large chunks of existing code.
+In a Microservices Architecture, an application is divided into a number of independently deployable services that interact through API interfaces. With this approach, each service can be deployed and scaled independently of the others. As a result, teams can deliver large, complex applications faster and more frequently. Unlike a monolithic application, a Microservices Architecture allows teams to introduce new features and changes more quickly without having to rewrite large chunks of existing code.
 
-But what is the difference between MSA and SOA? You cannot say that MSA is always strictly better than SOA. It is more correct to say that each architecture has a different purpose. Let's look at the differences between MSA and SOA in a table.
+So what is the difference between MSA and SOA? You cannot say that MSA is always better than SOA. It is more accurate to say that each architecture serves a different purpose. Let's look at the differences between MSA and SOA in a table.
 
 | MSA                                                                            | SOA                                                                                                                                   |
 |--------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
-| Microservices usually use lightweight protocols (REST/HTTP, etc.)              | SOA supports multiprotocols.                                                                                                   |
+| Microservices typically use lightweight protocols (REST/HTTP, etc.).              | SOA supports multi-protocols.                                                                                                   |
 | Focuses on the division of tasks.                                              | Focuses on reuse.                                                                                           |
-| Uses simple messaging systems.                                                 | Uses a service provider (also called Enterprise Service Bus (ESB)) for communication.                   |
-| Microservices use the " divide as little architecture as possible" approach.   | SOA uses a " divide as much architecture as possible" approach (eliminates reuse, one of the basic principles of SOA) |
-| Failures are well taken care of (microservices are almost independent).        | Errors and failures are poorly handled in comparison to MSA.                                                                               |
+| Uses simple messaging systems.                                                 | Uses a service provider (also called an Enterprise Service Bus (ESB)) for communication.                   |
+| Microservices use the " divide as little architecture as possible" approach.   | SOA uses a "share as much architecture as possible" approach (eliminating reuse, one of the basic principles of SOA). |
+| Failures are well taken care of (microservices are almost independent).        | Errors and failures are poorly handled compared to MSA.                                                                               |
 | Each microservice uses its own independent database.                           | Services in SOA share a single data repository.                                                                                      |
 | Suitable for small web systems.                                                | Suitable for large, complex business applications.                                                                                      |
 
-The line between SOA and MSA is very arbitrary and vague, so many of the things in the table can be true for both architectures.
+The line between SOA and MSA is very arbitrary and vague, so many of the things in the table can apply to both architectures.
 
-An example of Microservice Architecture ("Web API store") is shown in the picture below.
+An example of a Microservice Architecture ("Web API store") is shown in the figure below.
 
 <div align="center">
 
@@ -98,34 +98,34 @@ An example of Microservice Architecture ("Web API store") is shown in the pictur
 
 ### Advantages of Microservice Architecture
 * Iterative development. A microservices-based software architecture lends itself well to an agile software development organization based on an iterative approach. By decomposing a running application into separate, loosely coupled services, new features and functionality can be tested and added without the risk of stopping the application.
-* Flexibility. Microservices provide greater flexibility in the software development process at several levels at once. This allows different teams to work on different services at the same time, and makes it easier to bring new team members into the development process because code that is broken into separate functional pieces is easier to read and understand.
-* Freedom to choose the technology stack. In a monolithic architecture, where services are tightly coupled, it is important to maintain consistency in the technologies used in the application. They must also be compatible with each other, which is not the case with all programming languages and software development tools. Loosely coupled microservices provide much greater freedom in the choice of technology stack. To the point where a development team can even create separate services with a completely different set of development tools.
-* Availability. One of the biggest benefits of microservice architecture is that loosely coupled services provide greater application reliability and availability. If one service fails, the rest of the application usually continues to work for users.
-* Scalability. Another advantage of microservices is that this approach is well suited for scaling applications. The modularity of microservices makes it easy to add new features directly to a running application. Although the initial cost of a microservices architecture is higher, it can be much cheaper to scale than a monolithic application due to a combination of the benefits mentioned above.
+* Flexibility. Microservices provide greater flexibility in the software development process at multiple levels at once. This allows different teams to work on different services at the same time, and makes it easier to bring new team members into the development process because code that is broken into separate functional pieces is easier to read and understand.
+* Freedom to choose the technology stack. In a monolithic architecture where services are tightly coupled, it is important to maintain consistency in the technologies used in the application. They must also be compatible with each other, which is not the case with all programming languages and software development tools. Loosely coupled microservices offer much greater freedom in the choice of technology stack. To the point where a development team can even create separate services with a completely different set of development tools.
+* Availability. One of the biggest benefits of a microservice architecture is that loosely coupled services provide greater application reliability and availability. If one service fails, the rest of the application typically continues to work for users.
+* Scalability. Another advantage of microservices is that this approach is well suited for scaling applications. The modularity of microservices makes it easy to add new features directly to a running application. Although the initial cost of a microservices architecture is higher, it can be much cheaper to scale than a monolithic application due to a combination of the above benefits.
 * Performance. You can also significantly improve performance by distributing services and loads across multiple servers.
 
 ### Disadvantages of Microservice Architecture
-* Synchronization complexity. A distributed system, such as microservices, inevitably adds complexity because its parts must be synchronized to work as a single software system. And when services are distributed across servers, you need to prepare the infrastructure for microservices to work together.
-* Higher upfront costs. While trying to significantly scale a monolithic application can be a nightmare, resulting in dramatically higher direct development costs, a microservices architecture requires higher upfront costs. Each microservice requires its own development team (although one team may be responsible for multiple microservices). In addition, an automated testing and deployment (CI/CD) process must be set up. All of this leads to higher upfront costs.
-* The need for DevOps. A distributed system like microservices requires skilled orchestration, usually using Kubernetes and other DevOps tools and processes. This means you'll need to hire at least one DevOps engineer, which also increases costs.
+* Synchronization complexity. A distributed system, such as microservices, inevitably adds complexity because its parts must be synchronized to function as a single software system. And when services are distributed across servers, you need to prepare the infrastructure for microservices to work together.
+* Higher upfront costs. While trying to scale a monolithic application significantly can be a nightmare, resulting in dramatically higher direct development costs, a Microservices Architecture requires higher upfront costs. Each microservice requires a dedicated development team (although one team may be responsible for multiple microservices). In addition, an automated testing and deployment (CI/CD) process must be established. All of this leads to higher upfront costs.
+* The need for DevOps. A distributed system like microservices requires skilled orchestration, typically using Kubernetes and other DevOps tools and processes. This means you'll need to hire at least one DevOps engineer, which also increases costs.
 
 ### Authentication and authorization
 
-Scary and very similar words. What do they mean? In addition, let's consider the term *identification*.
+Scary and very similar words. What do they mean? Let's look at the term *identification*.
 
-**Identification** is a procedure which results in an identifier for an identification subject that uniquely identifies that subject in the information system. In simple words, it is the process of determining *who* makes a request to the system. 
+**Identification** is a process that results in an identifier for an identification subject that uniquely identifies that subject in the information system. In simple terms, it is the process of determining *who* is making a request to the system. 
 
-**Authentication** is checking the authenticity of a user by comparing the password he or she enters with the password stored in the database. Simply put, it is a check that the person making the request is not pretending to be someone else.
+**Authentication** is the process of verifying the authenticity of a user by comparing the password he or she enters with the password stored in the database. Simply put, it is a check that the person making the request is not pretending to be someone else.
 
-**Authorization** means granting a certain person or group of people rights to perform certain actions. After successful identification and authorization, the user must be given the rights to do something in the system in accordance with the chosen model of access to resources.
+**Authorization** is the granting of rights to a specific person or group of people to perform specific actions. After successful identification and authorization, the user must be given the rights to do something in the system according to the chosen model of access to resources.
 
-You deal with these procedures all the time. Take Sberbank Online as an example. First, you enter your username (or phone number), which the system uses to determine which account you are trying to log in to. If identification is successful, move on to the authentication procedure. You enter your password. If you successfully enter a password, the system may ask for another code (for example, a code from an SMS) — this is called **two-factor authentication**. If it's successful, move on to the authorization procedure: the system gives you access rights to information about your accounts, loans, bonuses, etc.
+You deal with these procedures all the time. Let us take Sberbank Online as an example. First, you enter your username (or phone number), which the system uses to identify the account to which you are trying to log in. If the identification is successful, you proceed to the authentication procedure. You enter your password. If you successfully enter a password, the system may ask you to enter another code (for example, a code from an SMS) — this is called **two-factor authentication**. If it's successful, you move on to the authorization process: the system grants you access rights to information about your accounts, loans, bonuses, etc.
 
 ### Access control models
 
-System security administration can be very expensive and inefficient, especially if you consider each new user individually and make individual decisions about their rights each time. Moreover, in this case, errors and, as a consequence, information leaks are possible. Thus, there is a clear need for an orderly control of user rights by means of proven access models.
+System security administration can be very expensive and inefficient, especially if you have to consider each new user individually and make individual decisions about their rights each time. In addition, this approach is prone to errors and information leakage. Thus, there is a clear need for an orderly control of user rights by means of proven access models.
 
-In the theory of databases there are the following access models:
+In database theory, the following access models exist:
 
 - MAC — Mandatory Access Control;
 - DAC — Discretionary Access Control;
@@ -135,11 +135,11 @@ In the theory of databases there are the following access models:
 But since we are considering access to the *system*, only two models stand out — Role-Based Access Control and Claim-Based Access Control (RBAC and CBAC).
 
 #### **RBAC**
-User permissions are grouped into **roles**. And roles are assigned to **subjects**. So the difficulty of assigning rights disappears: they are already logically grouped in some role. Examples of roles in the case of our store: salesman, consultant (for example, consultant may not have access to sales service methods), buyer, courier, etc.
+User permissions are grouped into **roles**. And roles are assigned to **subjects**. So the difficulty of assigning permissions disappears: they are already logically grouped in some role. Examples of roles in the case of our store: salesman, consultant (for example, consultant may not have access to sales service methods), buyer, courier, etc.
 
 A common mistake with RBAC is to group users and assign rights to them instead of *grouping access rights* into roles, which are then assigned to users. 
 
-An advantage of RBAC is the separation of duties, which is often the reality of the business.
+An advantage of RBAC is segregation of duties, which is often the reality of business.
 
 A disadvantage of RBAC is the need to develop a detailed role model.
 
@@ -149,19 +149,19 @@ You can see an example in C# in the materials.
 
 "Claim" can mean many things, but for now we will use the term "assertion". What is an assertion? You can think of it as a kind of tag/label attached to a user. Examples: pensioner, European, administrator, etc. 
 
-This approach is clearly broader than RBAC, because it is easy to reduce a requirements-based model to a role-based model by leaving only one assertion of type "role" and assigning it the values "consultant", "administrator", etc. The point is that we create a more flexible system by adding multiple statements of different types.
+This approach is clearly broader than RBAC, because it is easy to reduce a requirements-based model to a role-based model by leaving only one assertion of type "role" and assigning it the values "consultant", "administrator", etc. The point is that we create a more flexible system by adding multiple assertions of different types.
 
-Different languages have different tools for implementing the models in question.
+Different languages have different tools for implementing these models.
 
 You can see an example in C# in the materials.
 
 ### JWT tokens
 
-It is known that according to the REST methodology the server does not need to know anything about the previous states of any client. The client sends a request to the server with all the necessary information at once.
+It is well known that according to the REST methodology, the server does not need to know anything about the previous states of any client. The client sends a request to the server with all the necessary information at once.
 
 Since the server does not store any data about the client's state, and almost every modern system uses authorization, you need some way to "signal" to the server that the client sending the request is already authorized. Yes, you could send a login and password each time in the request parameters, but this is extremely insecure. The solution is **JSON Web Token** (or **JWT**).
 
-The idea of tokens isn't that complicated: let's store the user's token and id in the database instead of login and password, and give the token on the first request using a hash function of some unique user properties (id, login, password). That way, subsequent requests don't require username and password, just a token. The token is often given a lifetime, after which it becomes invalid.
+The idea of tokens isn't that complicated: let's store the user's token and id in the database instead of login and password, and give the token on the first request using a hash function of some unique user properties (id, login, password). That way, subsequent requests don't require a username and password, just a token. The token is often given a lifetime, after which it becomes invalid.
 
 JWT has advantages: it is self-sufficient, all necessary information can be stored in the token itself. Let's have a look at the structure of a token.
 
@@ -173,18 +173,18 @@ The token consists of 3 main parts:
 - Payload,
 - Signature.
 
-The header and payload are formed separately, then the signature is created based on them.
+The header and the payload are created separately, then the signature is created based on them.
 
-The header consists of the fields "type" and "algorithm" (hashing signature):
+The header consists of the fields "type" and "algorithm" (hash signature):
 ```
 {
     "typ": "JWT",
     "alg": "HS256"
 }
 ```
-[Official website](jwt.io) offers only two hashing algorithms: HS256 and RS256.
+[Official website](jwt.io) offers only two hash algorithms: HS256 and RS256.
 
-The payload is any data we want to keep inside the token. However, the standard provides several predefined fields: iss (issuer), sub (subject), exp (expire time), iat (issued at), etc.
+The payload is any data we want to keep inside the token. However, the standard provides several predefined fields: iss (issuer), sub (subject), exp (expiration time), iat (issued at), etc.
 
 An example of payload:
 ```
@@ -195,7 +195,7 @@ An example of payload:
 }
 ```
 
-** Important!** The payload is not encrypted, so be careful.
+**Important!** The payload is not encrypted, so be careful.
 
 Finally, the signature is created based on the header and the payload. 
 
@@ -206,7 +206,7 @@ Header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 Payload: eyJpc3MiOiJDb29sIGRldiB0ZWFtIiwic3ViIjoiYXV0aCIsIm15X2F0dHJfZm9yX2RhdGEiOiJJIGxvdmUgaWNlIGNyZWFtISJ9
 ```
 
-Then, the strings are joined with a dot and hashed using the specified algorithm. Let the user's password be `qwerty123`. Then we get the signature with the following function:
+Then the strings are concatenated with a dot and hashed with the specified algorithm. Suppose the user's password is `qwerty123`. Then we get the signature with the following function:
 
 ```python
 HS256('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9' + '.' + 'eyJpc3MiOiJDb29sIGRldiB0ZWFtIiwic3ViIjoiYXV0aCIsIm15X2F0dHJfZm9yX2RhdGEiOiJJIGxvdmUgaWNlIGNyZWFtISJ9', 'qwerty123') = m-XiMqPrcoXQrORjJPjddx53DhB8lgAB-WGaA2iQGVs
@@ -222,7 +222,7 @@ Without knowing the private key (password) you cannot change the signature. If t
 
 You can do all of the above steps on your own. This is a good exercise to make sure that JWT doesn't work like magic, but in a fairly simple and straightforward way.
 
-After the first login with password, the client will return the generated JWT. With each subsequent request, the client passes the JWT token it has already received to the API in the manner specified by the API (for example, via a header or request parameter). When the server receives the JWT, it decodes the header and the payload (checking the reserved fields). Then it performs a signature (the server knows the user's secret key/password), and if it matches the signature from the token, the authorization is passed.
+After the first login with password, the client returns the generated JWT. With each subsequent request, the client passes the JWT token it has already received to the API in the manner specified by the API (for example, via a header or request parameter). When the server receives the JWT, it decodes the header and payload (checking for reserved fields). Then it performs a signature (the server knows the user's secret key/password), and if it matches the signature from the token, the authorization is passed.
 
 Of course, you can implement the above algorithm yourself. However, there are many libraries available for authorization using JWT. You can read more about them on the official [JWT](https://jwt.io/libraries) portal.
 
@@ -232,7 +232,7 @@ The REST methodology has become incredibly popular among developers. However, in
 
 gRPC is a modern, high-performance open source platform that evolves the aging RPC (Remote Procedure Call) protocol.
 
-The goal of RPC is to make remote procedure calls as similar as possible to local procedure calls. The interaction in RPC is based on the client-server model. The client and server do not interact with normal HTTP requests, but with remote procedure calls. The IDL (Interface Description Language) is used to specify the contract for the functions and data types to be called. You can see how RPC works in the image below.
+The goal of RPC is to make remote procedure calls as similar as possible to local procedure calls. Interaction in RPC is based on the client-server model. The client and server do not interact with normal HTTP requests, but with remote procedure calls. The IDL (Interface Description Language) is used to specify the contract for the functions and data types to be called. You can see how RPC works in the image below.
 
 <div align="center">
 
@@ -240,15 +240,15 @@ The goal of RPC is to make remote procedure calls as similar as possible to loca
 
 </div>
 
-gRPC copies this architectural style of client-server interaction through function calls. It turns out that gRPC is not a new concept, but only an evolution of older technologies.
+gRPC copies this architectural style of client-server interaction through function calls. It turns out that gRPC is not a new concept, just an evolution of older technologies.
 
 Let's take a look at why gRPC has become so popular in recent years.
 
-1. Abstraction is simple: it uses function calls to place HTTP requests that can be confusing when reading the code.
+1. The abstraction is simple: it uses function calls to make HTTP requests, which can be confusing when reading the code.
 2. Supports many languages.
 3. Good request execution speed (efficiency).
 
-Also gRPC is used in Microservice Architecture you just read about. As you know, microservices can be written in different languages and one microservice can call many other microservices. Using gRPC, we abstract away from the technology used in the microservices we want. It all comes down to a classic procedure call in the code.
+gRPC is also used in the Microservices Architecture you just read about. As you know, microservices can be written in different languages, and one microservice can call many other microservices. Using gRPC, we abstract away from the technology used in the microservices we want. It all boils down to a classic procedure call in the code.
 
 <div align="center">
 
@@ -256,17 +256,17 @@ Also gRPC is used in Microservice Architecture you just read about. As you know,
 
 </div>
 
-A typical gRPC client application calls a local in-process function that implements a business operation. Internally, this local function (basically a stub) calls another function on the remote computer. What appears to be a local call essentially becomes a transparent out-of-process call to a remote service. "Under the hood" RPC implements point to point network communication, serialization and code execution on different computers.
+A typical gRPC client application calls a local in-process function that implements a business operation. Internally, this local function (essentially a stub) calls another function on the remote computer. What appears to be a local call essentially becomes a transparent out-of-process call to a remote service. "Under the hood", RPC implements point-to-point network communication, serialization, and code execution on different machines.
 
-Thus, the application code is focused on business functions, while the gRPC handles communications.
+This allows the application code to focus on business functions while gRPC handles the communication.
 
-Once again, it is impossible not to note the performance of gRPC. If gRPC basically uses the same ideas as classical RPC, then what makes it special? The answer: HTTP / 2, as well as one-way and two-way streaming, which allows gRPC to be used for streaming and event-driven data transfer in both directions.
+Again, it is impossible not to notice the performance of gRPC. If gRPC uses basically the same ideas as classic RPC, what makes it different? The answer: HTTP / 2, as well as one-way and two-way streaming, which allows gRPC to be used for streaming and event-driven data transfers in both directions.
 
-In 2015, Google launched support for HTTP / 2 to replace the old HTTP / 1.1 in Chrome browser. With the traditional HTTP protocol, you can't send multiple requests or get multiple responses together in one connection. A new connection would have to be created for each of them. This type of request/response multiplexing is now possible in HTTP/2. It allows getting useful data from multiple requests with the same header, thus identifying it as a single request. 
+In 2015, Google introduced support for HTTP/2 to replace the old HTTP/1.1 in the Chrome browser. With the traditional HTTP protocol, you can't send multiple requests or get multiple responses together in one connection. A new connection would have to be created for each of them. This type of request/response multiplexing is now possible in HTTP/2. It allows you to retrieve useful data from multiple requests with the same header, thus identifying them as a single request. 
 
-Besides, the problem of huge headers in requests has been solved. HTTP / 2 has a very interesting strategy called HPack to deal with this. First of all, everything in HTTP / 2 is encoded before it is sent, including the headers. This really helps with performance, but it's not the most important thing about header compression. HTTP / 2 displays the header on both client and server sides. Based on this, HTTP / 2 can find out if the header contains the same value, and sends the header value only if it is different from the previous header.
+It also solves the problem of huge headers in requests. HTTP/2 has a very interesting strategy to deal with this, called HPack. First, everything in HTTP / 2 is encrypted before it is sent, including the headers. This really helps with performance, but it's not the most important thing about header compression. HTTP / 2 displays the headers on both the client and server sides. Based on this, HTTP / 2 can determine if the header contains the same value, and only sends the header value if it is different from the previous header.
 
-gRPC is a binary protocol that uses the protobuf protocol from Google to serialize its frames.
+gRPC is a binary protocol that uses Google's protobuf protocol to serialize its frames.
 
 #### Protobuf
 
@@ -275,7 +275,7 @@ Let's talk about Protobuf (Protocol Buffer), the most commonly used Interface De
 The contracts are described in files with the extension `.proto`. Based on the proto file, the `protoc` compiler generates both client and server code. The code includes:
 
 - Typed objects shared by client and server.
-- A typed base class that implements all network communication, which you can later inherit and extend.
+- A typed base class that implements all the network communication, which you can later inherit and extend.
 - A client stub that calls the necessary gRPC services to call a remote procedure.
 
 At runtime, each message is serialized into a standard Protobuf representation and sent from the client to the server (or vice versa). Unlike JSON or XML, Protobuf messages are serialized into a binary byte sequence.
@@ -323,15 +323,15 @@ message HelloReply {
 }
 ```
 
-gRPC provides full support in most popular development stacks, including Java, JavaScript, C#, Go, Swift, and NodeJS.
+gRPC provides full support for most popular development stacks, including Java, JavaScript, C#, Go, Swift, and NodeJS.
 
-So, gRPC is an interesting replacement for the REST API that you can use in your projects. You can take a further look at what metadata is, how streaming works, interceptors, and about load balancing in gRPC. It's a pretty interesting topic, and more importantly, it's rapidly evolving. 
+This makes gRPC an interesting REST API replacement that you can use in your projects. You can take a further look at what metadata is, how streaming works, interceptors, and about load balancing in gRPC. It's a pretty interesting topic, and more importantly, it's evolving rapidly. 
 
-### Dependency Injection, IoC-container
+### Dependency Injection, IoC Containers
 
-To finish, let's talk about a very interesting pattern that is used in the design of software components — Dependency Injection (DI).
+Finally, let's talk about a very interesting pattern used in software component design — Dependency Injection (DI).
 
-According to the Single Responsibility Principle (SRP), an object hands over the care of building the dependencies it requires to an external generic mechanism (Dependency Injector). The concept of DI-container or IoC-container is introduced, which saves specific implementations of a given interface or base class and later "injects" them into class constructors.
+According to the Single Responsibility Principle (SRP), an object delegates the care of building the dependencies it needs to an external generic mechanism (Dependency Injector). The concept of DI containers or IoC containers is introduced, which store specific implementations of a given interface or base class and later "inject" them into class constructors.
 
 <div align="center">
 
@@ -364,15 +364,15 @@ You can see an example in c# in the materials.
     * The authorization service must provide the following methods:
          - Creating a user from input data (email, first name, last name, phone number, password) returns a signed token.
          - One of the most important principles of computer security must be respected: the system must not store the passwords of its users in plain text.Passwords in the database should be stored in hashed form with salt (an arbitrary concatenated string before hashing).Also, you cannot use outdated and vulnerable md5 and sha1 hashing algorithms. This way, even if your database falls into the hands of intruders, they won't know the real passwords used by your clients.
-         - Verifying the username-password pair (authenticating the user) returns the token.
+         - Verifying the username/password pair (authenticating the user) returns the token.
          - Changing the user password
-         - Password recovery method: Send password to user's email (You don't need to implement sending it to the email itself. Instead, implement a stub for sending to email in the form of password output to authorization service console)
+         - Password recovery method: Send password to user's email (You don't need to implement sending the password to the email itself. Instead, implement a stub for sending to email in the form of password output to authorization service console).
 3. Add a registration (/register), authorization (/auth), and password recovery (/reset) method to the appliance store. These methods are not authenticated, but only go to the authorization service to verify or create data.
 4. Implement endpoint authorization of all APIs based on verification in the authentication service.To authenticate the user, you must go to the authentication service and confirm the validity of the token. If the token is valid, the method is available; if not, it returns 401.
-    * Authorization in controller methods should be based on a self-written authorization attribute whose logic is in the middleware of the application. That is, you must authenticate the user before sending the request to the handler.
+    * Authorization in controller methods should be based on a self-written authorization attribute whose logic resides in the application's middleware. That is, you must authenticate the user before sending the request to the handler.
     * The JWT token must be passed in the Authorization header.
 
-I.e. the authenticator (middleware) goes to the authorization service you wrote via gRPC and if successful, passes it to the handler. 
+I.e. the authenticator (middleware) goes to the authorization service you wrote via gRPC and passes it to the handler if successful. 
 
-** Important! ** Don't forget that gRPC runs on top of http/2
+**Important! ** Don't forget that gRPC runs on top of HTTP/2.
 
