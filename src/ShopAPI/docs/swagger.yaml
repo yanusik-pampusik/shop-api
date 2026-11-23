@@ -1,0 +1,1079 @@
+basePath: /
+definitions:
+  dto.AddressCreateDTO:
+    properties:
+      city:
+        type: string
+      country:
+        type: string
+      street:
+        type: string
+    required:
+    - city
+    - country
+    - street
+    type: object
+  dto.AddressDTO:
+    properties:
+      city:
+        type: string
+      country:
+        type: string
+      id:
+        type: string
+      street:
+        type: string
+    required:
+    - city
+    - country
+    - street
+    type: object
+  dto.AuthResponse:
+    properties:
+      token:
+        type: string
+    type: object
+  dto.CategoryDTO:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    required:
+    - name
+    type: object
+  dto.ChangePasswordRequest:
+    properties:
+      new_password:
+        type: string
+      old_password:
+        type: string
+    required:
+    - new_password
+    - old_password
+    type: object
+  dto.ClientCreateDTO:
+    properties:
+      address_id:
+        type: string
+      birthday:
+        description: формат "2006-01-02"
+        type: string
+      client_name:
+        type: string
+      client_surname:
+        type: string
+      gender:
+        enum:
+        - M
+        - F
+        type: string
+    required:
+    - address_id
+    - birthday
+    - client_name
+    - client_surname
+    - gender
+    type: object
+  dto.ClientDTO:
+    properties:
+      address:
+        $ref: '#/definitions/dto.AddressDTO'
+      address_id:
+        type: string
+      birthday:
+        type: string
+      client_name:
+        type: string
+      client_surname:
+        type: string
+      gender:
+        type: string
+      id:
+        type: string
+      registration_date:
+        type: string
+    type: object
+  dto.ClientUpdateAddressDTO:
+    properties:
+      address:
+        $ref: '#/definitions/dto.AddressCreateDTO'
+    required:
+    - address
+    type: object
+  dto.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  dto.ProductCreateDTO:
+    properties:
+      available_stock:
+        minimum: 0
+        type: integer
+      category_id:
+        type: string
+      name:
+        type: string
+      price:
+        minimum: 0
+        type: number
+      supplier_id:
+        type: string
+    required:
+    - category_id
+    - name
+    - price
+    - supplier_id
+    type: object
+  dto.ProductDTO:
+    properties:
+      available_stock:
+        type: integer
+      category:
+        $ref: '#/definitions/dto.CategoryDTO'
+      category_id:
+        type: string
+      id:
+        type: string
+      image_id:
+        type: string
+      last_update_date:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      supplier:
+        $ref: '#/definitions/dto.SupplierDTO'
+      supplier_id:
+        type: string
+    type: object
+  dto.ProductDecreaseStockDTO:
+    properties:
+      amount:
+        type: integer
+    required:
+    - amount
+    type: object
+  dto.RegisterRequest:
+    properties:
+      email:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+    required:
+    - email
+    - first_name
+    - last_name
+    - password
+    - phone
+    type: object
+  dto.ResetRequest:
+    properties:
+      email:
+        type: string
+    required:
+    - email
+    type: object
+  dto.SuccessResponse:
+    properties:
+      success:
+        type: boolean
+    type: object
+  dto.SupplierCreateDTO:
+    properties:
+      address_id:
+        type: string
+      name:
+        type: string
+      phone_number:
+        type: string
+    required:
+    - address_id
+    - name
+    - phone_number
+    type: object
+  dto.SupplierDTO:
+    properties:
+      address:
+        $ref: '#/definitions/dto.AddressDTO'
+      address_id:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      phone_number:
+        type: string
+    type: object
+  dto.SupplierUpdateAddressDTO:
+    properties:
+      address:
+        $ref: '#/definitions/dto.AddressCreateDTO'
+    required:
+    - address
+    type: object
+info:
+  contact: {}
+  description: Appliance store with gRPC authentication. Use /register or /auth, then
+    Authorize with Bearer <token>.
+  title: ShopAPI
+  version: "2.0"
+paths:
+  /api/v1/clients:
+    get:
+      description: Возвращает всех клиентов с опциональной пагинацией
+      parameters:
+      - description: Лимит записей
+        in: query
+        name: limit
+        type: integer
+      - description: Смещение
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.ClientDTO'
+            type: array
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Получить список клиентов
+      tags:
+      - clients
+    post:
+      consumes:
+      - application/json
+      description: Добавляет нового клиента в магазин
+      parameters:
+      - description: Данные клиента
+        in: body
+        name: client
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ClientCreateDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dto.ClientDTO'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Создать клиента
+      tags:
+      - clients
+  /api/v1/clients/{id}:
+    delete:
+      parameters:
+      - description: ID клиента
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Удалить клиента
+      tags:
+      - clients
+    get:
+      parameters:
+      - description: ID клиента
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ClientDTO'
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Получить клиента по ID
+      tags:
+      - clients
+  /api/v1/clients/{id}/address:
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID клиента
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Новый адрес
+        in: body
+        name: address
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ClientUpdateAddressDTO'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Изменить адрес клиента
+      tags:
+      - clients
+  /api/v1/clients/search:
+    get:
+      parameters:
+      - description: Имя
+        in: query
+        name: name
+        required: true
+        type: string
+      - description: Фамилия
+        in: query
+        name: surname
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.ClientDTO'
+            type: array
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Найти клиентов по имени и фамилии
+      tags:
+      - clients
+  /api/v1/images:
+    post:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: ID товара
+        in: formData
+        name: product_id
+        required: true
+        type: string
+      - description: Файл изображения
+        in: formData
+        name: image
+        required: true
+        type: file
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Загрузить изображение для товара
+      tags:
+      - images
+  /api/v1/images/{id}:
+    delete:
+      parameters:
+      - description: ID изображения
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Удалить изображение
+      tags:
+      - images
+    get:
+      parameters:
+      - description: ID изображения
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: file
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Получить изображение по ID
+      tags:
+      - images
+    put:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: ID изображения
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Новый файл
+        in: formData
+        name: image
+        required: true
+        type: file
+      responses:
+        "204":
+          description: No Content
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Заменить изображение
+      tags:
+      - images
+  /api/v1/images/product/{product_id}:
+    get:
+      parameters:
+      - description: ID товара
+        in: path
+        name: product_id
+        required: true
+        type: string
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: file
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Получить изображение товара
+      tags:
+      - images
+  /api/v1/products:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.ProductDTO'
+            type: array
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Получить все товары
+      tags:
+      - products
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Данные товара
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ProductCreateDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dto.ProductDTO'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Создать товар
+      tags:
+      - products
+  /api/v1/products/{id}:
+    delete:
+      parameters:
+      - description: ID товара
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Удалить товар
+      tags:
+      - products
+    get:
+      parameters:
+      - description: ID товара
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ProductDTO'
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Получить товар по ID
+      tags:
+      - products
+  /api/v1/products/{id}/decrease:
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID товара
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Сколько уменьшить
+        in: body
+        name: amount
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ProductDecreaseStockDTO'
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Уменьшить количество товара
+      tags:
+      - products
+  /api/v1/suppliers:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.SupplierDTO'
+            type: array
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Получить всех поставщиков
+      tags:
+      - suppliers
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Данные поставщика
+        in: body
+        name: supplier
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SupplierCreateDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dto.SupplierDTO'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Создать поставщика
+      tags:
+      - suppliers
+  /api/v1/suppliers/{id}:
+    delete:
+      parameters:
+      - description: ID поставщика
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Удалить поставщика
+      tags:
+      - suppliers
+    get:
+      parameters:
+      - description: ID поставщика
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.SupplierDTO'
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Получить поставщика по ID
+      tags:
+      - suppliers
+  /api/v1/suppliers/{id}/address:
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID поставщика
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Новый адрес
+        in: body
+        name: address
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SupplierUpdateAddressDTO'
+      responses:
+        "204":
+          description: No Content
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Изменить адрес поставщика
+      tags:
+      - suppliers
+  /auth:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Credentials
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.AuthResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "503":
+          description: Service Unavailable
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "504":
+          description: Gateway Timeout
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Authenticate by email and password
+      tags:
+      - auth
+  /change-password:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Old and new password
+        in: body
+        name: passwords
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ChangePasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "503":
+          description: Service Unavailable
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "504":
+          description: Gateway Timeout
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Change the authenticated user's password
+      tags:
+      - auth
+  /register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: User details
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/dto.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dto.AuthResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "409":
+          description: Conflict
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "503":
+          description: Service Unavailable
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "504":
+          description: Gateway Timeout
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Register a user and issue a signed JWT
+      tags:
+      - auth
+  /reset:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Email
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ResetRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "503":
+          description: Service Unavailable
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "504":
+          description: Gateway Timeout
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Reset a password (email is printed in AuthService console)
+      tags:
+      - auth
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

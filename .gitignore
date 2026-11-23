@@ -48,3 +48,10 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Local configuration and build output
+.env
+.env.*
+!.env.example
+src/bin/
+*.log
